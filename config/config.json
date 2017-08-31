@@ -1,0 +1,18 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "dynamic-list-form-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/dynamicListForm/DynamicListFormWebPart.js",
+          "manifest": "./src/webparts/dynamicListForm/DynamicListFormWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "DynamicListFormWebPartStrings": "lib/webparts/dynamicListForm/loc/{locale}.js"
+  }
+}

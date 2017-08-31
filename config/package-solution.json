@@ -1,0 +1,12 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "react-list-form-client-side-solution",
+    "id": "3bce3f77-9cd1-4ce3-b7a3-0137ee4fb020",
+    "version": "1.0.0.0",
+    "skipFeatureDeployment": true
+  },
+  "paths": {
+    "zippedPackage": "solution/react-list-form.sppkg"
+  }
+}
