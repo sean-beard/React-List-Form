@@ -1,0 +1,54 @@
+{
+  "_NAR8NFw8cblGJm9t5CjqOw": {
+    "SuccessfullyLoadedText": "SuccessfullyLoadedText",
+    "ErrorLoadingText": "ErrorLoadingText"
+  },
+  "_vd/LT/qfiQhbHFfeM1GtlA": {
+    "FetchFailedError": "FetchFailedError"
+  },
+  "_FQya7ZjwIyrOEutOa+omIA": {
+    "Title": "Title",
+    "SubText": "SubText",
+    "OkButtonText": "OkButtonText",
+    "ClickHerePrefix": "ClickHerePrefix",
+    "ClickHereLink": "ClickHereLink",
+    "ClickHereSuffix": "ClickHereSuffix"
+  },
+  "_1JArBGDet5Uj9pJOV/9sFw": {
+    "UrlTextBoxPlaceholder": "UrlTextBoxPlaceholder",
+    "ScreenReaderMobilePreviewEntered": "ScreenReaderMobilePreviewEntered",
+    "ScreenReaderDevicePickerEntered": "ScreenReaderDevicePickerEntered",
+    "ScreenReaderDevicePickerSelectionChanged": "ScreenReaderDevicePickerSelectionChanged",
+    "Width": "Width",
+    "Height": "Height"
+  },
+  "_8EVKOH1av6NjR/ZNfdafrw": {
+    "WebPartData": "WebPartData",
+    "ClassicPages": "ClassicPages",
+    "ModernPages": "ModernPages",
+    "Close": "Close",
+    "WebPartDataHelpInfoLink": "WebPartDataHelpInfoLink"
+  },
+  "_IusqdbcSoVYQiit3+QRSxw": {
+    "Office365Title": "Office365Title",
+    "SharePointWorkbenchTitle": "SharePointWorkbenchTitle",
+    "ScreenReaderDisplayModeSwitchToEditMode": "ScreenReaderDisplayModeSwitchToEditMode",
+    "ScreenReaderDisplayModeSwitchToReadMode": "ScreenReaderDisplayModeSwitchToReadMode"
+  },
+  "_nCtJlVOXBHa59LgYtajnjA": {
+    "Save": "Save",
+    "SaveAltText": "SaveAltText",
+    "Discard": "Discard",
+    "DiscardAltText": "DiscardAltText",
+    "Mobile": "Mobile",
+    "MobleAltText": "MobleAltText",
+    "Tablet": "Tablet",
+    "TabletAltText": "TabletAltText",
+    "Preview": "Preview",
+    "PreviewAltText": "PreviewAltText",
+    "Edit": "Edit",
+    "EditAltText": "EditAltText",
+    "WebPartData": "WebPartData",
+    "WebPartDataAltText": "WebPartDataAltText"
+  }
+}
