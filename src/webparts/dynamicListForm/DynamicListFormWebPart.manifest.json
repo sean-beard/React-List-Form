@@ -20,7 +20,9 @@
     "description": { "default": "Create a custom form to modify a list on the site." },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "DynamicListForm"
+      "title": "Dynamic List Form",
+      "listName": " ",
+      "isEditable": true
     }
   }]
 }

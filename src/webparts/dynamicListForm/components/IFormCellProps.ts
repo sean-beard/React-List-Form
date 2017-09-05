@@ -1,5 +1,4 @@
-export interface IDynamicListFormProps {
-  title: string;
+export interface IFormCellProps {
   listName: string;
   context: any;
   isEditable: boolean;

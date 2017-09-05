@@ -1,3 +1,5 @@
 export interface IDynamicListFormWebPartProps {
-  description: string;
+  title: string;
+  listName: string;
+  isEditable: boolean;
 }

@@ -1,10 +1,17 @@
-declare interface IDynamicListFormWebPartStrings {
+// export interface IDynamicListFormStrings {
+  // PropertyPaneDescription: string;
+  // BasicGroupName: string;
+  // TitleFieldLabel: string;
+  // ListNameFieldLabel: string;
+// }
+declare interface IDynamicListFormStrings {
   PropertyPaneDescription: string;
   BasicGroupName: string;
-  DescriptionFieldLabel: string;
+  TitleFieldLabel: string;
+  ListNameFieldLabel: string;
 }
 
 declare module 'DynamicListFormWebPartStrings' {
-  const strings: IDynamicListFormWebPartStrings;
+  const strings: IDynamicListFormStrings;
   export = strings;
 }

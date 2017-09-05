@@ -1,0 +1,130 @@
+.formCell {
+  display: inline-block;
+  width: 45%;
+
+  .button,
+  .rowButton {
+    // Our button
+    text-decoration: none;
+    height: 32px;
+
+    // Primary Button
+    min-width: 80px;
+    background-color: #0078d7;
+    border-color: #0078d7;
+    color: #ffffff;
+
+    // Basic Button
+    outline: transparent;
+    position: relative;
+    font-family: "Segoe UI WestEuropean", "Segoe UI", -apple-system,
+      BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    font-weight: 400;
+    border-width: 0;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    padding: 0 16px;
+
+    .label {
+      font-weight: 600;
+      font-size: 14px;
+      height: 32px;
+      line-height: 32px;
+      margin: 0 4px;
+      vertical-align: top;
+      display: inline-block;
+    }
+  }
+
+  .rowButton {
+    width: 100%;
+    border: 1px solid white;
+  }
+}
+
+.modalMargin {
+  margin: 15px;
+}
+
+.modalInput {
+  width: 25%;
+  margin: 15px !important;
+}
+
+.modalHeader {
+  -webkit-box-flex: 1;
+  background: #0078d7;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 28px;
+  font-weight: 100;
+  font-weight: 600;
+  padding: 2.5%;
+  min-height: 40px;
+}
+
+.modalContainer {
+  height: 80vh;
+  width: 50vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+
+.calloutContainer {
+  max-width: 300px;
+}
+
+.calloutHeader {
+  padding: 18px 24px 12px;
+}
+
+.calloutTitle {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 100;
+  color: #333333;
+  font-weight: 300;
+}
+
+.calloutInner {
+  height: 100%;
+  padding: 0 24px 20px;
+}
+
+.calloutSubtext {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  color: #333333;
+  font-weight: 300;
+}
+
+.calloutActions {
+  position: relative;
+  margin-top: 20px;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.rowInlineStyle {
+  display: inline;
+}
+
+.newCellBtn {
+  width: 100%;
+  border: 1px solid white;
+}
