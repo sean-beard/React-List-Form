@@ -14,8 +14,7 @@ import {
   PropertyPaneButtonType,
   IPropertyPaneDropdownOption
 } from "@microsoft/sp-webpart-base";
-//import { IDynamicListFormStrings } from "./loc/mystrings";
-import * as strings from 'DynamicListFormWebPartStrings';
+import * as strings from "DynamicListFormWebPartStrings";
 import DynamicListForm from "./components/DynamicListForm";
 import { IDynamicListFormProps } from "./components/IDynamicListFormProps";
 import { IDynamicListFormWebPartProps } from "./IDynamicListFormWebPartProps";
@@ -79,7 +78,6 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
       >();
       response.value.map((list: IODataList) => {
         console.log("Found list with title = " + list.Title);
-        debugger;
         options.push({ key: list.Title, text: list.Title });
       });
 

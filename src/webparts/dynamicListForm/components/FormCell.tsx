@@ -57,7 +57,7 @@ export default class FormCell extends React.Component<
             text: field.Title
           };
         });
-        //TODO: mock out field type data & choice field options
+
         this._fields = response.value.map((field: ISPField) => {
           return {
             Title: field.Title,
@@ -257,12 +257,14 @@ export default class FormCell extends React.Component<
             optionsArray={this.state.optionsArray}
           />
         ) : (
-          <PrimaryButton
-            onClick={this._showModal.bind(this)}
-            className={formStyles.newCellBtn}
-          >
-            <p className={formStyles.label}>+</p>
-          </PrimaryButton>
+          <div>
+            <PrimaryButton
+              onClick={this._showModal.bind(this)}
+              className={formStyles.newCellBtn}
+            >
+              <p className={formStyles.label}>+</p>
+            </PrimaryButton>
+          </div>
         )}
 
         {this.state.showCallout && (

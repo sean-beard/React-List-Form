@@ -8,7 +8,11 @@ import {
   PrimaryButton
 } from "office-ui-fabric-react/lib/Button";
 import FormRow from "./FormRow";
-import { ISPHttpClientOptions, SPHttpClient } from "@microsoft/sp-http";
+import {
+  ISPHttpClientOptions,
+  SPHttpClient,
+  SPHttpClientResponse
+} from "@microsoft/sp-http";
 
 export default class DynamicListForm extends React.Component<
   IDynamicListFormProps,
@@ -25,42 +29,34 @@ export default class DynamicListForm extends React.Component<
     this.setState({ rowCount: this.state.rowCount + 1 });
   }
 
-  private handleSubmit(): Promise<Response> {
-    //TODO: create the list item
+  private handleSubmit(): void {
     var url =
       this.props.context.pageContext.web.absoluteUrl +
       "/_api/web/lists/getbytitle('" +
       this.props.listName +
       "')/items";
     var itemType = this.GetItemTypeForListName(this.props.listName);
-    // var item = {
-    //   "__metadata": {"type": itemType },
-    //   "Title": "Test Title"
-    // };
 
-    // const opt: ISPHttpClientOptions = {
-    //   headers: { "Content-Type": "application/json;odata=verbose" },
-    //   body: {"my": JSON.stringify(item)}
-    // };
-
+    //{"__metadata":{"type":"SP.Data.TestListListItem"},"Title":"Test Title2"}
     const body: string = JSON.stringify({
-          '__metadata': {
-            'type': itemType
-          },
-          'Title': 'Test Title'
-        });
+      __metadata: {
+        type: itemType
+      },
+      Title: "Test Title2"
+    });
 
-    return this.props.context.spHttpClient.post(
-      url,
-      SPHttpClient.configurations.v1,{
-          headers: {
-            'Accept': 'application/json;odata=nometadata',
-            'Content-type': 'application/json;odata=verbose',
-            'odata-version': ''
-          },
-          body: body
-        }
-    );
+    this.props.context.spHttpClient
+      .post(url, SPHttpClient.configurations.v1, {
+        headers: {
+          Accept: "application/json;odata=nometadata",
+          "Content-type": "application/json;odata=verbose",
+          "odata-version": ""
+        },
+        body: body
+      })
+      .then((response: SPHttpClientResponse): any => {
+        console.log(response.json());
+      });
   }
 
   // Get List Item Type metadata
@@ -68,7 +64,10 @@ export default class DynamicListForm extends React.Component<
     return (
       "SP.Data." +
       name.charAt(0).toUpperCase() +
-      name.split(" ").join("").slice(1) +
+      name
+        .split(" ")
+        .join("")
+        .slice(1) +
       "ListItem"
     );
   }
@@ -102,8 +101,8 @@ export default class DynamicListForm extends React.Component<
               </p>
               {rows}
               {showButton &&
-                this.props.isEditable &&
-                 <div className={styles.newButton}>
+              this.props.isEditable && (
+                <div className={styles.newButton}>
                   <DefaultButton
                     data-automation-id="test"
                     disabled={false}
@@ -119,12 +118,14 @@ export default class DynamicListForm extends React.Component<
                       ]
                     }}
                   />
-                </div>}
-              {!this.props.isEditable &&
+                </div>
+              )}
+              {!this.props.isEditable && (
                 <DefaultButton
                   onClick={this.handleSubmit.bind(this)}
                   text="Submit"
-                />}
+                />
+              )}
             </div>
           </div>
         </div>
