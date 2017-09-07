@@ -35,7 +35,7 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
   IDynamicListFormWebPartProps
 > {
   private _dropdownOptions: IPropertyPaneDropdownOption[] = [];
-  //private strings: IDynamicListFormStrings;
+  private _isDropdownDisabled: boolean = false;
 
   private _getListsAsync(): void {
     // Local environment
@@ -128,7 +128,8 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
                 PropertyPaneDropdown("listName", {
                   label: strings.ListNameFieldLabel,
                   options: this._dropdownOptions,
-                  selectedKey: 0
+                  selectedKey: 0,
+                  disabled: this._isDropdownDisabled
                 }),
                 PropertyPaneButton("isEditable", {
                   text: this.properties.isEditable ? "Save" : "Edit",
@@ -141,6 +142,16 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
         }
       ]
     };
+  }
+
+  protected onPropertyPaneFieldChanged(
+    propertyPath: string,
+    oldValue: any,
+    newValue: any
+  ): void {
+    if (this.properties.listName.trim()) {
+      this._isDropdownDisabled = true;
+    }
   }
 
   public render(): void {
