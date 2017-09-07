@@ -1,7 +1,6 @@
 import * as React from "react";
 import formStyles from "./FormCell.module.scss";
 import { IFormCellProps } from "./IFormCellProps";
-import { IFormCellState } from "./IFormCellState";
 import { escape } from "@microsoft/sp-lodash-subset";
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 import { Modal } from "office-ui-fabric-react/lib/Modal";
@@ -28,10 +27,7 @@ export interface ISPFields {
   value: ISPField[];
 }
 
-export default class FormCell extends React.Component<
-  IFormCellProps,
-  IFormCellState
-> {
+export default class FormCell extends React.Component<IFormCellProps> {
   private _cellElement: HTMLElement;
   private _fieldOptions: any[] = [];
   private _fields: ISPField[] = [];
