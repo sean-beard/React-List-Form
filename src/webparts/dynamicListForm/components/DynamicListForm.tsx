@@ -25,8 +25,6 @@ export default class DynamicListForm extends React.Component<
     this.state = {
       rows: []
     };
-
-    this.handleRemoveRow = this.handleRemoveRow.bind(this);
   }
 
   private handleNewDefaultRow(): void {
@@ -59,11 +57,7 @@ export default class DynamicListForm extends React.Component<
           showCallout: false,
           showListFieldInput: false,
           hasInputType: false,
-          inputs: [
-            {
-              _showDropDown: false
-            }
-          ]
+          inputs: [{}]
         }
       ]
     });
@@ -131,7 +125,7 @@ export default class DynamicListForm extends React.Component<
         <FormRow
           key={i}
           rowObj={this.state.rows[i]}
-          onRemoveRow={this.handleRemoveRow}
+          onRemoveRow={this.handleRemoveRow.bind(this)}
           onCellChange={this.handleCellChange.bind(this)}
           isEditable={this.props.isEditable}
         />

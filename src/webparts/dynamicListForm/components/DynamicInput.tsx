@@ -23,15 +23,41 @@ export default class DynamicInput extends React.Component<IDynamicInputProps> {
     }
   }
 
+  private clearObjectProps() {
+    for (var prop in this.props.inputObj) {
+      if (this.props.inputObj.hasOwnProperty(prop) && prop != "type") {
+        delete this.props.inputObj[prop];
+      }
+    }
+  }
+
+  private handleTxtChange(text): void {
+    this.clearObjectProps();
+    this.props.inputObj.textVal = text;
+    this.props.onChange(this.props.inputObj);
+  }
+
+  private handleDropdownChange(e): void {
+    this.clearObjectProps();
+    this.props.inputObj.selectedKey = e.key;
+    this.props.inputObj.selectedText = e.text;
+    this.props.onChange(this.props.inputObj);
+  }
+
   public render(): React.ReactElement<IDynamicInputProps> {
     return (
       <div>
-        {this.props.type === "label" && (
+        {this.props.inputObj.type === "label" && (
           <Label className={styles.label}>{this.props.lblValue}</Label>
         )}
-        {this.props.type === "textfield" && <TextField />}
-        {this.props.type === "dropdown" && (
-          <Dropdown options={this._dropdownOptions} />
+        {this.props.inputObj.type === "textfield" && (
+          <TextField onChanged={this.handleTxtChange.bind(this)} />
+        )}
+        {this.props.inputObj.type === "dropdown" && (
+          <Dropdown
+            options={this._dropdownOptions}
+            onChanged={this.handleDropdownChange.bind(this)}
+          />
         )}
       </div>
     );

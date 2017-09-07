@@ -138,7 +138,7 @@ export default class FormCell extends React.Component<IFormCellProps> {
 
     if (this.props.cellObj.showLblInput && elemToBeReplaced && labelValue) {
       this.props.cellObj.hasInputType = true;
-      this.props.cellObj.dynamicInputType = "label";
+      this.props.cellObj.inputs[0].type = "label";
     } else if (
       this.props.cellObj.showListFieldInput &&
       elemToBeReplaced &&
@@ -148,13 +148,13 @@ export default class FormCell extends React.Component<IFormCellProps> {
 
       switch (this.props.cellObj.spoFieldType.toLowerCase()) {
         case "text":
-          this.props.cellObj.dynamicInputType = "textfield";
+          this.props.cellObj.inputs[0].type = "textfield";
           break;
         case "choice":
-          this.props.cellObj.dynamicInputType = "dropdown";
+          this.props.cellObj.inputs[0].type = "dropdown";
           break;
         default:
-          this.props.cellObj.dynamicInputType = "textfield";
+          this.props.cellObj.inputs[0].type = "textfield";
       }
     }
 
@@ -218,6 +218,11 @@ export default class FormCell extends React.Component<IFormCellProps> {
     this.props.onChange(this.props.cellObj);
   }
 
+  private handleInputChange(inputObj): void {
+    this.props.cellObj.inputs[0] = inputObj;
+    this.props.onChange(this.props.cellObj);
+  }
+
   public render(): React.ReactElement<IFormCellProps> {
     const labelInput = this.props.cellObj.showLblInput ? (
       <TextField
@@ -245,9 +250,10 @@ export default class FormCell extends React.Component<IFormCellProps> {
       >
         {this.props.cellObj.hasInputType ? (
           <DynamicInput
-            type={this.props.cellObj.dynamicInputType}
             optionsArray={this.props.cellObj.optionsArray}
             lblValue={this.props.cellObj.lblValue}
+            onChange={this.handleInputChange.bind(this)}
+            inputObj={this.props.cellObj.inputs[0]}
           />
         ) : (
           <div>
