@@ -4,6 +4,10 @@ import { IFormCellProps } from "./IFormCellProps";
 import { escape } from "@microsoft/sp-lodash-subset";
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 import { Modal } from "office-ui-fabric-react/lib/Modal";
+import { IPropertyPaneDropdownOption } from "@microsoft/sp-webpart-base";
+import { Environment, EnvironmentType } from "@microsoft/sp-core-library";
+import MockHttpClient from "../MockHttpClient";
+import DynamicInput from "./DynamicInput";
 import {
   PrimaryButton,
   TextField,
@@ -11,10 +15,6 @@ import {
   Callout,
   IDropdownOption
 } from "office-ui-fabric-react/lib";
-import { IPropertyPaneDropdownOption } from "@microsoft/sp-webpart-base";
-import { Environment, EnvironmentType } from "@microsoft/sp-core-library";
-import MockHttpClient from "../MockHttpClient";
-import DynamicInput from "./DynamicInput";
 
 export interface ISPField {
   Title: string;
@@ -137,8 +137,8 @@ export default class FormCell extends React.Component<IFormCellProps> {
     var fieldInternalName: string = this.props.cellObj.fieldKeySelected;
 
     if (this.props.cellObj.showLblInput && elemToBeReplaced && labelValue) {
-      elemToBeReplaced.innerHTML = labelValue;
-      this.props.cellObj.hasInputType = false;
+      this.props.cellObj.hasInputType = true;
+      this.props.cellObj.dynamicInputType = "label";
     } else if (
       this.props.cellObj.showListFieldInput &&
       elemToBeReplaced &&
@@ -247,6 +247,7 @@ export default class FormCell extends React.Component<IFormCellProps> {
           <DynamicInput
             type={this.props.cellObj.dynamicInputType}
             optionsArray={this.props.cellObj.optionsArray}
+            lblValue={this.props.cellObj.lblValue}
           />
         ) : (
           <div>

@@ -3,11 +3,11 @@ import styles from "./DynamicListForm.module.scss";
 import { IDynamicListFormProps } from "./IDynamicListFormProps";
 import { IDynamicListFormState } from "./IDynamicListFormState";
 import { escape } from "@microsoft/sp-lodash-subset";
+import FormRow from "./FormRow";
 import {
   DefaultButton,
   PrimaryButton
 } from "office-ui-fabric-react/lib/Button";
-import FormRow from "./FormRow";
 import {
   ISPHttpClientOptions,
   SPHttpClient,

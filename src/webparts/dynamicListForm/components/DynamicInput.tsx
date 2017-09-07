@@ -1,6 +1,7 @@
 import * as React from "react";
 import { IDynamicInputProps } from "./IDynamicInputProps";
 import { IconButton } from "office-ui-fabric-react/lib/Button";
+import styles from "./DynamicInput.module.scss";
 import {
   TextField,
   Dropdown,
@@ -25,6 +26,9 @@ export default class DynamicInput extends React.Component<IDynamicInputProps> {
   public render(): React.ReactElement<IDynamicInputProps> {
     return (
       <div>
+        {this.props.type === "label" && (
+          <Label className={styles.label}>{this.props.lblValue}</Label>
+        )}
         {this.props.type === "textfield" && <TextField />}
         {this.props.type === "dropdown" && (
           <Dropdown options={this._dropdownOptions} />
