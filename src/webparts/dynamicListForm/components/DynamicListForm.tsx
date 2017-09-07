@@ -18,15 +18,57 @@ export default class DynamicListForm extends React.Component<
   IDynamicListFormProps,
   IDynamicListFormState
 > {
-  constructor() {
-    super();
+  private _rows = [];
+
+  constructor(props) {
+    super(props);
     this.state = {
-      rowCount: 0
+      rows: []
     };
+
+    this.handleRemoveRow = this.handleRemoveRow.bind(this);
   }
 
   private handleNewDefaultRow(): void {
-    this.setState({ rowCount: this.state.rowCount + 1 });
+    this._rows.push({
+      index: this.state.rows.length,
+      showRow: true,
+      listName: this.props.listName,
+      context: this.props.context,
+      isEditable: this.props.isEditable,
+      cells: [
+        {
+          index: 0,
+          _showModal: false,
+          showLblInput: false,
+          isSubmitted: false,
+          showCallout: false,
+          showListFieldInput: false,
+          hasInputType: false,
+          inputs: [
+            {
+              _showDropDown: false
+            }
+          ]
+        },
+        {
+          index: 1,
+          _showModal: false,
+          showLblInput: false,
+          isSubmitted: false,
+          showCallout: false,
+          showListFieldInput: false,
+          hasInputType: false,
+          inputs: [
+            {
+              _showDropDown: false
+            }
+          ]
+        }
+      ]
+    });
+
+    this.setState({ rows: this._rows });
   }
 
   private handleSubmit(): void {
@@ -59,6 +101,16 @@ export default class DynamicListForm extends React.Component<
       });
   }
 
+  private handleRemoveRow(index): void {
+    this._rows[index].showRow = false;
+    this.setState({ rows: this._rows });
+  }
+
+  private handleCellChange(rIndex, cIndex, cellObj): void {
+    this._rows[rIndex].cells[cIndex] = cellObj;
+    this.setState({ rows: this._rows });
+  }
+
   // Get List Item Type metadata
   private GetItemTypeForListName(name) {
     return (
@@ -73,13 +125,14 @@ export default class DynamicListForm extends React.Component<
   }
 
   public render(): React.ReactElement<IDynamicListFormProps> {
-    var rows = [];
-    for (var i = 0; i < this.state.rowCount; i++) {
-      rows.push(
+    var formRows = [];
+    for (var i = 0; i < this.state.rows.length; i++) {
+      formRows.push(
         <FormRow
           key={i}
-          listName={this.props.listName}
-          context={this.props.context}
+          rowObj={this.state.rows[i]}
+          onRemoveRow={this.handleRemoveRow}
+          onCellChange={this.handleCellChange.bind(this)}
           isEditable={this.props.isEditable}
         />
       );
@@ -99,7 +152,7 @@ export default class DynamicListForm extends React.Component<
                 Get started by editing the web part properties and choosing a
                 list.
               </p>
-              {rows}
+              {formRows}
               {showButton &&
               this.props.isEditable && (
                 <div className={styles.newButton}>
@@ -121,10 +174,12 @@ export default class DynamicListForm extends React.Component<
                 </div>
               )}
               {!this.props.isEditable && (
-                <DefaultButton
-                  onClick={this.handleSubmit.bind(this)}
-                  text="Submit"
-                />
+                <div className={styles.newButton}>
+                  <DefaultButton
+                    onClick={this.handleSubmit.bind(this)}
+                    text="Submit"
+                  />
+                </div>
               )}
             </div>
           </div>

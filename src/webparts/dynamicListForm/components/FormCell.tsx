@@ -38,15 +38,6 @@ export default class FormCell extends React.Component<
 
   constructor(props) {
     super(props);
-    this.state = {
-      showModal: false,
-      showCallout: false,
-      showLblInput: false,
-      showListFieldInput: false,
-      isSubmitted: false,
-      hasInputType: false
-    };
-
     /* Check which environment the app is in */
     if (Environment.type === EnvironmentType.Local) {
       //Local Env
@@ -127,121 +118,126 @@ export default class FormCell extends React.Component<
       });
   }
 
-  private _showModal(e) {
+  private showModal(e) {
     var targetElem = e.target;
     var divElem =
       targetElem.type === "submit"
         ? targetElem.parentElement
         : targetElem.parentElement.parentElement;
 
-    this.setState({
-      showModal: true,
-      elemToBeReplaced: divElem ? divElem : null
-    });
+    this.props.cellObj.showModal = true;
+    this.props.cellObj.elemToBeReplaced = divElem ? divElem : null;
+    this.props.onChange(this.props.cellObj);
   }
 
-  private _closeModal() {
-    this.setState({ showModal: false });
+  private closeModal() {
+    this.props.cellObj.showModal = false;
+    this.props.onChange(this.props.cellObj);
   }
 
   private handleModalSubmit() {
-    var elemToBeReplaced = this.state.elemToBeReplaced;
-    var labelValue: string = this.state.lblValue;
-    var fieldInternalName: string = this.state.fieldKeySelected;
+    var elemToBeReplaced = this.props.cellObj.elemToBeReplaced;
+    var labelValue: string = this.props.cellObj.lblValue;
+    var fieldInternalName: string = this.props.cellObj.fieldKeySelected;
 
-    if (this.state.showLblInput && elemToBeReplaced && labelValue) {
+    if (this.props.cellObj.showLblInput && elemToBeReplaced && labelValue) {
       elemToBeReplaced.innerHTML = labelValue;
-      this.setState({ hasInputType: false });
+      this.props.cellObj.hasInputType = false;
     } else if (
-      this.state.showListFieldInput &&
+      this.props.cellObj.showListFieldInput &&
       elemToBeReplaced &&
       fieldInternalName
     ) {
-      this.setState({ hasInputType: true });
+      this.props.cellObj.hasInputType = true;
 
-      switch (this.state.spoFieldType.toLowerCase()) {
+      switch (this.props.cellObj.spoFieldType.toLowerCase()) {
         case "text":
-          this.setState({ dynamicInputType: "textfield" });
+          this.props.cellObj.dynamicInputType = "textfield";
           break;
         case "choice":
-          this.setState({ dynamicInputType: "dropdown" });
+          this.props.cellObj.dynamicInputType = "dropdown";
           break;
         default:
-          this.setState({ dynamicInputType: "textfield" });
+          this.props.cellObj.dynamicInputType = "textfield";
       }
     }
 
-    this.setState({
-      showModal: false,
-      isSubmitted: true
-    });
+    this.props.cellObj.showModal = false;
+    this.props.cellObj.isSubmitted = true;
+    this.props.onChange(this.props.cellObj);
   }
 
   private handleElemTypeChange(e): void {
     var keyVal: string = e.key;
-    this.setState({ elemTypeKeySelected: keyVal });
+    this.props.cellObj.elemTypeKeySelected = keyVal;
 
     if (keyVal === "lbl") {
-      this.setState({ showLblInput: true, showListFieldInput: false });
+      this.props.cellObj.showLblInput = true;
+      this.props.cellObj.showListFieldInput = false;
     } else if (keyVal === "fieldInput") {
-      this.setState({ showListFieldInput: true, showLblInput: false });
+      this.props.cellObj.showLblInput = false;
+      this.props.cellObj.showListFieldInput = true;
     }
+    this.props.onChange(this.props.cellObj);
   }
 
   private handleFieldChange(e): void {
     var internalName: string = e.key;
-    this.setState({ fieldKeySelected: internalName });
+    this.props.cellObj.fieldKeySelected = internalName;
 
     var selectedFieldObject: object = this._fields.filter(obj => {
       return obj.InternalName === internalName;
     });
-
-    this.setState({
-      spoFieldType: selectedFieldObject[0].TypeAsString,
-      optionsArray: selectedFieldObject[0].Choices
-        ? selectedFieldObject[0].Choices
-        : null
-    });
+    this.props.cellObj.spoFieldType = selectedFieldObject[0].TypeAsString;
+    this.props.cellObj.optionsArray = selectedFieldObject[0].Choices
+      ? selectedFieldObject[0].Choices
+      : null;
+    this.props.onChange(this.props.cellObj);
   }
 
   private handleLblValChange(text): void {
-    this.setState({ lblValue: text });
+    this.props.cellObj.lblValue = text;
+    this.props.onChange(this.props.cellObj);
   }
 
   private handlelistFieldValChange(text): void {
-    this.setState({ listFieldValue: text });
+    this.props.cellObj.listFieldValue = text;
+    this.props.onChange(this.props.cellObj);
   }
 
   private onMouseOverCell(): void {
-    if (this.state.isSubmitted && this.props.isEditable) {
-      this.setState({ showCallout: true });
+    if (this.props.cellObj.isSubmitted && this.props.isEditable) {
+      this.props.cellObj.showCallout = true;
+      this.props.onChange(this.props.cellObj);
     }
   }
 
   private onCalloutDismiss(): void {
-    this.setState({ showCallout: false });
+    this.props.cellObj.showCallout = false;
+    this.props.onChange(this.props.cellObj);
   }
 
   private handleCalloutEdit(): void {
-    this.setState({ showModal: true });
+    this.props.cellObj.showModal = true;
+    this.props.onChange(this.props.cellObj);
   }
 
   public render(): React.ReactElement<IFormCellProps> {
-    const labelInput = this.state.showLblInput ? (
+    const labelInput = this.props.cellObj.showLblInput ? (
       <TextField
         className={formStyles.modalInput}
         label="Label Text"
-        value={this.state.lblValue}
+        value={this.props.cellObj.lblValue}
         onChanged={this.handleLblValChange.bind(this)}
       />
     ) : null;
 
-    const listFieldInput = this.state.showListFieldInput ? (
+    const listFieldInput = this.props.cellObj.showListFieldInput ? (
       <Dropdown
         className={formStyles.modalInput}
         options={this._fieldOptions}
         onChanged={this.handleFieldChange.bind(this)}
-        selectedKey={this.state.fieldKeySelected}
+        selectedKey={this.props.cellObj.fieldKeySelected}
       />
     ) : null;
 
@@ -251,15 +247,15 @@ export default class FormCell extends React.Component<
         onMouseOver={() => this.onMouseOverCell()}
         ref={cell => (this._cellElement = cell)}
       >
-        {this.state.hasInputType ? (
+        {this.props.cellObj.hasInputType ? (
           <DynamicInput
-            type={this.state.dynamicInputType}
-            optionsArray={this.state.optionsArray}
+            type={this.props.cellObj.dynamicInputType}
+            optionsArray={this.props.cellObj.optionsArray}
           />
         ) : (
           <div>
             <PrimaryButton
-              onClick={this._showModal.bind(this)}
+              onClick={this.showModal.bind(this)}
               className={formStyles.newCellBtn}
             >
               <p className={formStyles.label}>+</p>
@@ -267,7 +263,7 @@ export default class FormCell extends React.Component<
           </div>
         )}
 
-        {this.state.showCallout && (
+        {this.props.cellObj.showCallout && (
           <Callout
             className={formStyles.calloutContainer}
             ariaLabelledBy={"callout-label-1"}
@@ -303,8 +299,8 @@ export default class FormCell extends React.Component<
         )}
 
         <Modal
-          isOpen={this.state.showModal}
-          onDismiss={this._closeModal.bind(this)}
+          isOpen={this.props.cellObj.showModal}
+          onDismiss={this.closeModal.bind(this)}
           isBlocking={false}
           containerClassName={formStyles.modalContainer}
         >
@@ -322,7 +318,7 @@ export default class FormCell extends React.Component<
                 { key: "fieldInput", text: "List Field Input" }
               ]}
               onChanged={this.handleElemTypeChange.bind(this)}
-              selectedKey={this.state.elemTypeKeySelected}
+              selectedKey={this.props.cellObj.elemTypeKeySelected}
             />
 
             {labelInput}

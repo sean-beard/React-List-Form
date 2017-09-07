@@ -1,5 +1,6 @@
 export interface IFormRowProps {
-  listName: string;
-  context: any;
+  rowObj: any;
+  onRemoveRow: any;
+  onCellChange: any;
   isEditable: boolean;
 }
