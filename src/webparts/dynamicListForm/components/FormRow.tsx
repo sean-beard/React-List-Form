@@ -9,14 +9,27 @@ export default class FormRow extends React.Component<IFormRowProps> {
     super(props);
   }
 
+  /**
+   * To remove a row pass the index of the target row to the parent component
+   */
   private handleRemoveRow(): void {
     this.props.onRemoveRow(this.props.rowObj.index);
   }
 
+  /**
+   * Update the state of a cell
+   * Pass relevant data to the parent component
+   * @param cellObj Target cell object that has been modified
+   */
   private handleCellChange(cellObj): void {
     this.props.onCellChange(this.props.rowObj.index, cellObj.index, cellObj);
   }
 
+  /**
+   * Render a form row:
+   *  Form cells
+   *  Remove buttons
+   */
   public render(): React.ReactElement<IFormRowProps> {
     var rowCells = [];
     for (var i = 0; i < this.props.rowObj.cells.length; i++) {

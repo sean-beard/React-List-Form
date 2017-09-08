@@ -12,6 +12,10 @@ import {
 export default class DynamicInput extends React.Component<IDynamicInputProps> {
   private _dropdownOptions: IDropdownOption[] = [];
 
+  /**
+   * Populate dropdown options array for choice fields
+   * @param props Properties passed to the constructor
+   */
   constructor(props) {
     super(props);
 
@@ -23,6 +27,9 @@ export default class DynamicInput extends React.Component<IDynamicInputProps> {
     }
   }
 
+  /**
+   * Delete all field type specific properties
+   */
   private clearObjectProps() {
     for (var prop in this.props.inputObj) {
       if (
@@ -35,12 +42,20 @@ export default class DynamicInput extends React.Component<IDynamicInputProps> {
     }
   }
 
+  /**
+   * Update the text change in the input object
+   * @param text New text value
+   */
   private handleTxtChange(text): void {
     this.clearObjectProps();
     this.props.inputObj.textVal = text;
     this.props.onChange(this.props.inputObj);
   }
 
+  /**
+   * Update the selected dropdown option in the input object
+   * @param e Object created when an option is selected
+   */
   private handleDropdownChange(e): void {
     this.clearObjectProps();
     this.props.inputObj.selectedKey = e.key;
@@ -48,6 +63,9 @@ export default class DynamicInput extends React.Component<IDynamicInputProps> {
     this.props.onChange(this.props.inputObj);
   }
 
+  /**
+   * Render the field depending on the input object type
+   */
   public render(): React.ReactElement<IDynamicInputProps> {
     return (
       <div>

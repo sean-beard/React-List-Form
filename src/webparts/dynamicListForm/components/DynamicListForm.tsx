@@ -27,6 +27,9 @@ export default class DynamicListForm extends React.Component<
     };
   }
 
+  /**
+   * Create a new default row
+   */
   private handleNewDefaultRow(): void {
     this._rows.push({
       index: this.state.rows.length,
@@ -61,6 +64,9 @@ export default class DynamicListForm extends React.Component<
     this.setState({ rows: this._rows });
   }
 
+  /**
+   * Create a new spanning row
+   */
   private handleNewSpanningRow(): void {
     this._rows.push({
       index: this.state.rows.length,
@@ -85,6 +91,9 @@ export default class DynamicListForm extends React.Component<
     this.setState({ rows: this._rows });
   }
 
+  /**
+   * Submit the form and create a new list item
+   */
   private handleSubmit(): void {
     var url =
       this.props.context.pageContext.web.absoluteUrl +
@@ -134,26 +143,20 @@ export default class DynamicListForm extends React.Component<
         body: bodyStr
       })
       .then((response: SPHttpClientResponse): any => {
+        //TODO: post completed logic, clear form?
         console.log(response.json());
       });
   }
 
-  private handleRemoveRow(index): void {
-    this._rows[index].showRow = false;
-    this.setState({ rows: this._rows });
-  }
-
-  private handleCellChange(rIndex, cIndex, cellObj): void {
-    this._rows[rIndex].cells[cIndex] = cellObj;
-    this.setState({ rows: this._rows });
-  }
-
-  // Get List Item Type metadata
-  private GetItemTypeForListName(name) {
+  /**
+   * Get list item Type metadata
+   * @param listName Name of the target list
+   */
+  private GetItemTypeForListName(listName) {
     return (
       "SP.Data." +
-      name.charAt(0).toUpperCase() +
-      name
+      listName.charAt(0).toUpperCase() +
+      listName
         .split(" ")
         .join("")
         .slice(1) +
@@ -161,6 +164,32 @@ export default class DynamicListForm extends React.Component<
     );
   }
 
+  /**
+   * Set the flag to not render a row
+   * @param index Index of the row to remove
+   */
+  private handleRemoveRow(index): void {
+    this._rows[index].showRow = false;
+    this.setState({ rows: this._rows });
+  }
+
+  /**
+   * Set the state of the view model when a cell changes
+   * @param rIndex Index of the target row
+   * @param cIndex Index of the target cell
+   * @param cellObj Cell object which contains the modified data
+   */
+  private handleCellChange(rIndex, cIndex, cellObj): void {
+    this._rows[rIndex].cells[cIndex] = cellObj;
+    this.setState({ rows: this._rows });
+  }
+
+  /**
+   * Render the dynamic list form:
+   *  Title
+   *  Rows
+   *  New row/submit buttons
+   */
   public render(): React.ReactElement<IDynamicListFormProps> {
     var formRows = [];
     for (var i = 0; i < this.state.rows.length; i++) {

@@ -32,6 +32,10 @@ export default class FormCell extends React.Component<IFormCellProps> {
   private _fieldOptions: any[] = [];
   private _fields: ISPField[] = [];
 
+  /**
+   * Fetch the field data for the list
+   * @param props 
+   */
   constructor(props) {
     super(props);
     /* Check which environment the app is in */
@@ -65,6 +69,9 @@ export default class FormCell extends React.Component<IFormCellProps> {
     }
   }
 
+  /**
+   * Fetch mock list field data
+   */
   private getMockFieldData(): Promise<ISPFields> {
     return MockHttpClient.getSPFields().then((data: ISPField[]) => {
       var fieldData: ISPFields = { value: data };
@@ -72,6 +79,9 @@ export default class FormCell extends React.Component<IFormCellProps> {
     }) as Promise<ISPFields>;
   }
 
+  /**
+   * Fetch list field data
+   */
   private fetchOptions(): Promise<object[]> {
     var url =
       this.props.context.pageContext.web.absoluteUrl +
@@ -96,6 +106,10 @@ export default class FormCell extends React.Component<IFormCellProps> {
     });
   }
 
+  /**
+   * REST API call to return list field data
+   * @param url Request URL for the get API call
+   */
   private fetchListFields(url: string): Promise<any> {
     return this.props.context.spHttpClient
       .get(url, SPHttpClient.configurations.v1)
@@ -114,6 +128,10 @@ export default class FormCell extends React.Component<IFormCellProps> {
       });
   }
 
+  /**
+   * Open the modal window
+   * @param e Object returned by the event receiver
+   */
   private showModal(e) {
     var targetElem = e.target;
     var divElem =
@@ -126,11 +144,17 @@ export default class FormCell extends React.Component<IFormCellProps> {
     this.props.onChange(this.props.cellObj);
   }
 
+  /**
+   * Close the modal window
+   */
   private closeModal() {
     this.props.cellObj.showModal = false;
     this.props.onChange(this.props.cellObj);
   }
 
+  /**
+   * Update the view model state when the modal is submitted
+   */
   private handleModalSubmit() {
     var elemToBeReplaced = this.props.cellObj.elemToBeReplaced;
     var labelValue: string = this.props.cellObj.lblValue;
@@ -164,6 +188,10 @@ export default class FormCell extends React.Component<IFormCellProps> {
     this.props.onChange(this.props.cellObj);
   }
 
+  /**
+   * Update the cell object with the type of element
+   * @param e Object returned by the event receiver
+   */
   private handleElemTypeChange(e): void {
     var keyVal: string = e.key;
     this.props.cellObj.elemTypeKeySelected = keyVal;
@@ -178,6 +206,10 @@ export default class FormCell extends React.Component<IFormCellProps> {
     this.props.onChange(this.props.cellObj);
   }
 
+  /**
+   * Update the cell object with the new field data
+   * @param e Object returned by the event receiver
+   */
   private handleFieldChange(e): void {
     var internalName: string = e.key;
     this.props.cellObj.fieldKeySelected = internalName;
@@ -192,16 +224,18 @@ export default class FormCell extends React.Component<IFormCellProps> {
     this.props.onChange(this.props.cellObj);
   }
 
+  /**
+   * Update the cell object with the new label text value
+   * @param text 
+   */
   private handleLblValChange(text): void {
     this.props.cellObj.lblValue = text;
     this.props.onChange(this.props.cellObj);
   }
 
-  private handlelistFieldValChange(text): void {
-    this.props.cellObj.listFieldValue = text;
-    this.props.onChange(this.props.cellObj);
-  }
-
+  /**
+   * Open the callout window when the mouse is over an editable cell
+   */
   private onMouseOverCell(): void {
     if (this.props.cellObj.isSubmitted && this.props.isEditable) {
       this.props.cellObj.showCallout = true;
@@ -209,21 +243,38 @@ export default class FormCell extends React.Component<IFormCellProps> {
     }
   }
 
+  /**
+   * Close the callout window when the mouse is outside an editable cell
+   */
   private onCalloutDismiss(): void {
     this.props.cellObj.showCallout = false;
     this.props.onChange(this.props.cellObj);
   }
 
+  /**
+   * Open the modal window
+   */
   private handleCalloutEdit(): void {
     this.props.cellObj.showModal = true;
     this.props.onChange(this.props.cellObj);
   }
 
+  /**
+   * Update the input object for the cell
+   * @param inputObj Target input object
+   */
   private handleInputChange(inputObj): void {
     this.props.cellObj.inputs[0] = inputObj;
     this.props.onChange(this.props.cellObj);
   }
 
+  /**
+   * Render the cell and related components:
+   *  New cell buttons
+   *  Dynamic input fields
+   *  Modal window
+   *  Callout window
+   */
   public render(): React.ReactElement<IFormCellProps> {
     const labelInput = this.props.cellObj.showLblInput ? (
       <TextField

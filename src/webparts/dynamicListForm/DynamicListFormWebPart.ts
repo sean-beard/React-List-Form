@@ -37,6 +37,9 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
   private _dropdownOptions: IPropertyPaneDropdownOption[] = [];
   private _isDropdownDisabled: boolean = false;
 
+  /**
+   * Populate "List Name" dropdown options array
+   */
   private _getListsAsync(): void {
     // Local environment
     if (Environment.type === EnvironmentType.Local) {
@@ -60,6 +63,9 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
     }
   }
 
+  /**
+   * Fetch mock list name data
+   */
   private _getMockListData(): Promise<ISPLists> {
     return MockHttpClient.getSPLists().then((data: ISPList[]) => {
       var listData: ISPLists = { value: data };
@@ -67,6 +73,9 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
     }) as Promise<ISPLists>;
   }
 
+  /**
+   * Fetch list name data 
+   */
   private fetchOptions(): Promise<IPropertyPaneDropdownOption[]> {
     var url =
       this.context.pageContext.web.absoluteUrl +
@@ -85,6 +94,10 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
     });
   }
 
+  /**
+   * REST API call to return list name data
+   * @param url Request URL for the get API call
+   */
   private fetchLists(url: string): Promise<any> {
     return this.context.spHttpClient
       .get(url, SPHttpClient.configurations.v1)
@@ -103,14 +116,23 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
       });
   }
 
+  /**
+   * Get the web part version
+   */
   protected get dataVersion(): Version {
     return Version.parse("1.0");
   }
 
+  /**
+   * Toggle whether or not the form is editable
+   */
   protected handleModeBtnClick(): boolean {
     return !this.properties.isEditable;
   }
 
+  /**
+   * Configure the web part property pane
+   */
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
       pages: [
@@ -144,6 +166,12 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
     };
   }
 
+  /**
+   * Disable the ability to choose a list name after initial choice
+   * @param propertyPath Path to the changed field
+   * @param oldValue Previous field value
+   * @param newValue Current field value
+   */
   protected onPropertyPaneFieldChanged(
     propertyPath: string,
     oldValue: any,
@@ -154,6 +182,9 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
     }
   }
 
+  /**
+   * Render the Dynamic List Form and invoke the code that fetches list names on the site
+   */
   public render(): void {
     const element: React.ReactElement<
       IDynamicListFormProps
