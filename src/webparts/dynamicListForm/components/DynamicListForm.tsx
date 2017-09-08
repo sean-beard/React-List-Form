@@ -43,14 +43,34 @@ export default class DynamicListForm extends React.Component<
           showCallout: false,
           showListFieldInput: false,
           hasInputType: false,
-          inputs: [
-            {
-              _showDropDown: false
-            }
-          ]
+          inputs: [{}]
         },
         {
           index: 1,
+          _showModal: false,
+          showLblInput: false,
+          isSubmitted: false,
+          showCallout: false,
+          showListFieldInput: false,
+          hasInputType: false,
+          inputs: [{}]
+        }
+      ]
+    });
+
+    this.setState({ rows: this._rows });
+  }
+
+  private handleNewSpanningRow(): void {
+    this._rows.push({
+      index: this.state.rows.length,
+      showRow: true,
+      listName: this.props.listName,
+      context: this.props.context,
+      isEditable: this.props.isEditable,
+      cells: [
+        {
+          index: 0,
           _showModal: false,
           showLblInput: false,
           isSubmitted: false,
@@ -186,6 +206,11 @@ export default class DynamicListForm extends React.Component<
                           key: "defaultRow",
                           name: "Default Row",
                           onClick: this.handleNewDefaultRow.bind(this)
+                        },
+                        {
+                          key: "spanningRow",
+                          name: "Spanning Row",
+                          onClick: this.handleNewSpanningRow.bind(this)
                         }
                       ]
                     }}

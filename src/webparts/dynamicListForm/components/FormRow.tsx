@@ -18,22 +18,23 @@ export default class FormRow extends React.Component<IFormRowProps> {
   }
 
   public render(): React.ReactElement<IFormRowProps> {
-    const formRow = this.props.rowObj.showRow ? (
+    var rowCells = [];
+    for (var i = 0; i < this.props.rowObj.cells.length; i++) {
+      rowCells.push(
+        <FormCell
+          key={i}
+          cellObj={this.props.rowObj.cells[i]}
+          listName={this.props.rowObj.listName}
+          context={this.props.rowObj.context}
+          isEditable={this.props.isEditable}
+          onChange={this.handleCellChange.bind(this)}
+        />
+      );
+    }
+
+    return (
       <div className={styles.formRow}>
-        <FormCell
-          cellObj={this.props.rowObj.cells[0]}
-          listName={this.props.rowObj.listName}
-          context={this.props.rowObj.context}
-          isEditable={this.props.isEditable}
-          onChange={this.handleCellChange.bind(this)}
-        />
-        <FormCell
-          cellObj={this.props.rowObj.cells[1]}
-          listName={this.props.rowObj.listName}
-          context={this.props.rowObj.context}
-          isEditable={this.props.isEditable}
-          onChange={this.handleCellChange.bind(this)}
-        />
+        {rowCells}
         {this.props.isEditable && (
           <IconButton
             className={styles.rowDeleteBtn}
@@ -42,7 +43,6 @@ export default class FormRow extends React.Component<IFormRowProps> {
           />
         )}
       </div>
-    ) : null;
-    return formRow;
+    );
   }
 }
