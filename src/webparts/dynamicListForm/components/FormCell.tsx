@@ -145,6 +145,7 @@ export default class FormCell extends React.Component<IFormCellProps> {
       fieldInternalName
     ) {
       this.props.cellObj.hasInputType = true;
+      this.props.cellObj.inputs[0].fieldInternalName = fieldInternalName;
 
       switch (this.props.cellObj.spoFieldType.toLowerCase()) {
         case "text":
@@ -256,14 +257,16 @@ export default class FormCell extends React.Component<IFormCellProps> {
             inputObj={this.props.cellObj.inputs[0]}
           />
         ) : (
-          <div>
-            <PrimaryButton
-              onClick={this.showModal.bind(this)}
-              className={formStyles.newCellBtn}
-            >
-              <p className={formStyles.label}>+</p>
-            </PrimaryButton>
-          </div>
+          this.props.isEditable && (
+            <div>
+              <PrimaryButton
+                onClick={this.showModal.bind(this)}
+                className={formStyles.newCellBtn}
+              >
+                <p className={formStyles.label}>+</p>
+              </PrimaryButton>
+            </div>
+          )
         )}
 
         {this.props.cellObj.showCallout && (

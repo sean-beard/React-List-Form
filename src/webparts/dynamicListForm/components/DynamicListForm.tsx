@@ -74,12 +74,35 @@ export default class DynamicListForm extends React.Component<
     var itemType = this.GetItemTypeForListName(this.props.listName);
 
     //{"__metadata":{"type":"SP.Data.TestListListItem"},"Title":"Test Title2"}
-    const body: string = JSON.stringify({
+    var inputObjects = [];
+
+    this.state.rows.forEach(row => {
+      row.cells.forEach(cell => {
+        if (cell.hasInputType) {
+          var inputObj = cell.inputs[0];
+          inputObjects.push(inputObj);
+        }
+      });
+    });
+
+    var body: object = {
       __metadata: {
         type: itemType
-      },
-      Title: "Test Title2"
+      }
+    };
+
+    inputObjects.forEach(inputObj => {
+      debugger;
+      switch (inputObj.type) {
+        case "textfield":
+          body[inputObj.fieldInternalName] = inputObj.textVal;
+          break;
+        case "dropdown":
+          body[inputObj.fieldInternalName] = inputObj.selectedText;
+          break;
+      }
     });
+    var bodyStr = JSON.stringify(body);
 
     this.props.context.spHttpClient
       .post(url, SPHttpClient.configurations.v1, {
@@ -88,7 +111,7 @@ export default class DynamicListForm extends React.Component<
           "Content-type": "application/json;odata=verbose",
           "odata-version": ""
         },
-        body: body
+        body: bodyStr
       })
       .then((response: SPHttpClientResponse): any => {
         console.log(response.json());
@@ -121,15 +144,17 @@ export default class DynamicListForm extends React.Component<
   public render(): React.ReactElement<IDynamicListFormProps> {
     var formRows = [];
     for (var i = 0; i < this.state.rows.length; i++) {
-      formRows.push(
-        <FormRow
-          key={i}
-          rowObj={this.state.rows[i]}
-          onRemoveRow={this.handleRemoveRow.bind(this)}
-          onCellChange={this.handleCellChange.bind(this)}
-          isEditable={this.props.isEditable}
-        />
-      );
+      if (this.state.rows[i].showRow) {
+        formRows.push(
+          <FormRow
+            key={i}
+            rowObj={this.state.rows[i]}
+            onRemoveRow={this.handleRemoveRow.bind(this)}
+            onCellChange={this.handleCellChange.bind(this)}
+            isEditable={this.props.isEditable}
+          />
+        );
+      }
     }
     var showButton = this.props.listName != " " ? true : false;
     return (

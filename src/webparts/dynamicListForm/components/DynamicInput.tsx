@@ -25,7 +25,11 @@ export default class DynamicInput extends React.Component<IDynamicInputProps> {
 
   private clearObjectProps() {
     for (var prop in this.props.inputObj) {
-      if (this.props.inputObj.hasOwnProperty(prop) && prop != "type") {
+      if (
+        this.props.inputObj.hasOwnProperty(prop) &&
+        prop != "type" &&
+        prop != "fieldInternalName"
+      ) {
         delete this.props.inputObj[prop];
       }
     }
