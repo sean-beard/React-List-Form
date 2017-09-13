@@ -31,7 +31,7 @@ export default class DynamicListForm extends React.Component<
    * Create a new default row
    */
   private handleNewDefaultRow(): void {
-    this._rows.push({
+    const newRow = {
       index: this.state.rows.length,
       showRow: true,
       listName: this.props.listName,
@@ -59,16 +59,16 @@ export default class DynamicListForm extends React.Component<
           inputs: [{}]
         }
       ]
-    });
+    };
 
-    this.setState({ rows: this._rows });
+    this.setState({ rows: [...this.state.rows, newRow] });
   }
 
   /**
    * Create a new spanning row
    */
   private handleNewSpanningRow(): void {
-    this._rows.push({
+    const newRow = {
       index: this.state.rows.length,
       showRow: true,
       listName: this.props.listName,
@@ -86,9 +86,9 @@ export default class DynamicListForm extends React.Component<
           inputs: [{}]
         }
       ]
-    });
+    };
 
-    this.setState({ rows: this._rows });
+    this.setState({ rows: [...this.state.rows, newRow] });
   }
 
   /**
@@ -133,6 +133,15 @@ export default class DynamicListForm extends React.Component<
     });
     var bodyStr = JSON.stringify(body);
 
+    this.createItem(url, bodyStr);
+  }
+
+  /**
+   * REST API call to create a new list item 
+   * @param url Request URL for the post API call
+   * @param body Body string of the API call
+   */
+  private createItem(url: string, body: string): void {
     this.props.context.spHttpClient
       .post(url, SPHttpClient.configurations.v1, {
         headers: {
@@ -140,11 +149,11 @@ export default class DynamicListForm extends React.Component<
           "Content-type": "application/json;odata=verbose",
           "odata-version": ""
         },
-        body: bodyStr
+        body: body
       })
       .then((response: SPHttpClientResponse): any => {
         //TODO: post completed logic, clear form?
-        console.log(response.json());
+        alert("Item has been successfully created.");
       });
   }
 
@@ -169,8 +178,9 @@ export default class DynamicListForm extends React.Component<
    * @param index Index of the row to remove
    */
   private handleRemoveRow(index): void {
-    this._rows[index].showRow = false;
-    this.setState({ rows: this._rows });
+    const newRows = this.state.rows;
+    newRows[index].showRow = false;
+    this.setState({ rows: newRows });
   }
 
   /**
@@ -180,8 +190,9 @@ export default class DynamicListForm extends React.Component<
    * @param cellObj Cell object which contains the modified data
    */
   private handleCellChange(rIndex, cIndex, cellObj): void {
-    this._rows[rIndex].cells[cIndex] = cellObj;
-    this.setState({ rows: this._rows });
+    const newRows = this.state.rows;
+    newRows[rIndex].cells[cIndex] = cellObj;
+    this.setState({ rows: newRows });
   }
 
   /**
@@ -214,7 +225,7 @@ export default class DynamicListForm extends React.Component<
           >
             <div className="ms-Grid-col ms-u-lg10 ms-u-xl8 ms-u-xlPush2 ms-u-lgPush1">
               <span className="ms-font-xl ms-fontColor-white">
-                {escape(this.props.title)}
+                {this.props.title}
               </span>
               <p className="ms-font-l ms-fontColor-white">
                 Get started by editing the web part properties and choosing a
