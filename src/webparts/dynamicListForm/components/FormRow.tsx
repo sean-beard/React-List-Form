@@ -31,8 +31,8 @@ export default class FormRow extends React.Component<IFormRowProps> {
    *  Remove buttons
    */
   public render(): React.ReactElement<IFormRowProps> {
-    var rowCells = [];
-    for (var i = 0; i < this.props.rowObj.cells.length; i++) {
+    let rowCells = [];
+    for (let i = 0; i < this.props.rowObj.cells.length; i++) {
       rowCells.push(
         <FormCell
           key={i}

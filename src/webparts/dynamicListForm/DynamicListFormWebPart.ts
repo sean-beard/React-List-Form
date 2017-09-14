@@ -68,7 +68,7 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
    */
   private _getMockListData(): Promise<ISPLists> {
     return MockHttpClient.getSPLists().then((data: ISPList[]) => {
-      var listData: ISPLists = { value: data };
+      const listData: ISPLists = { value: data };
       return listData;
     }) as Promise<ISPLists>;
   }
@@ -77,12 +77,12 @@ export default class DynamicListFormWebPart extends BaseClientSideWebPart<
    * Fetch list name data 
    */
   private fetchOptions(): Promise<IPropertyPaneDropdownOption[]> {
-    var url =
+    const url =
       this.context.pageContext.web.absoluteUrl +
       `/_api/web/lists?$filter=(Hidden eq false) and (BaseType eq 0)`;
 
     return this.fetchLists(url).then(response => {
-      var options: Array<IPropertyPaneDropdownOption> = new Array<
+      let options: Array<IPropertyPaneDropdownOption> = new Array<
         IPropertyPaneDropdownOption
       >();
       response.value.map((list: IODataList) => {

@@ -95,26 +95,26 @@ export default class DynamicListForm extends React.Component<
    * Submit the form and create a new list item
    */
   private handleSubmit(): void {
-    var url =
+    const url =
       this.props.context.pageContext.web.absoluteUrl +
       "/_api/web/lists/getbytitle('" +
       this.props.listName +
       "')/items";
-    var itemType = this.GetItemTypeForListName(this.props.listName);
+    const itemType = this.GetItemTypeForListName(this.props.listName);
 
     //{"__metadata":{"type":"SP.Data.TestListListItem"},"Title":"Test Title2"}
-    var inputObjects = [];
+    let inputObjects = [];
 
     this.state.rows.forEach(row => {
       row.cells.forEach(cell => {
         if (cell.hasInputType) {
-          var inputObj = cell.inputs[0];
+          const inputObj = cell.inputs[0];
           inputObjects.push(inputObj);
         }
       });
     });
 
-    var body: object = {
+    let body: object = {
       __metadata: {
         type: itemType
       }
@@ -131,7 +131,7 @@ export default class DynamicListForm extends React.Component<
           break;
       }
     });
-    var bodyStr = JSON.stringify(body);
+    const bodyStr = JSON.stringify(body);
 
     this.createItem(url, bodyStr);
   }
@@ -202,8 +202,8 @@ export default class DynamicListForm extends React.Component<
    *  New row/submit buttons
    */
   public render(): React.ReactElement<IDynamicListFormProps> {
-    var formRows = [];
-    for (var i = 0; i < this.state.rows.length; i++) {
+    let formRows = [];
+    for (let i = 0; i < this.state.rows.length; i++) {
       if (this.state.rows[i].showRow) {
         formRows.push(
           <FormRow
@@ -216,7 +216,7 @@ export default class DynamicListForm extends React.Component<
         );
       }
     }
-    var showButton = this.props.listName != " " ? true : false;
+    const showButton = this.props.listName != " " ? true : false;
     return (
       <div className={styles.dynamicListForm}>
         <div className={styles.container}>

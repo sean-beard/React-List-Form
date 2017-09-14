@@ -74,7 +74,7 @@ export default class FormCell extends React.Component<IFormCellProps> {
    */
   private getMockFieldData(): Promise<ISPFields> {
     return MockHttpClient.getSPFields().then((data: ISPField[]) => {
-      var fieldData: ISPFields = { value: data };
+      const fieldData: ISPFields = { value: data };
       return fieldData;
     }) as Promise<ISPFields>;
   }
@@ -83,14 +83,14 @@ export default class FormCell extends React.Component<IFormCellProps> {
    * Fetch list field data
    */
   private fetchOptions(): Promise<object[]> {
-    var url =
+    const url =
       this.props.context.pageContext.web.absoluteUrl +
       "/_api/web/lists/getbytitle('" +
       this.props.listName +
       "')/fields?$filter=Hidden eq false";
 
     return this.fetchListFields(url).then(response => {
-      var options: Array<object> = new Array<object>();
+      let options: Array<object> = new Array<object>();
       response.value.map(field => {
         options.push({ key: field.InternalName, text: field.Title });
 
@@ -133,8 +133,8 @@ export default class FormCell extends React.Component<IFormCellProps> {
    * @param e Object returned by the event receiver
    */
   private showModal(e) {
-    var targetElem = e.target;
-    var divElem =
+    const targetElem = e.target;
+    const divElem =
       targetElem.type === "submit"
         ? targetElem.parentElement
         : targetElem.parentElement.parentElement;
@@ -156,9 +156,9 @@ export default class FormCell extends React.Component<IFormCellProps> {
    * Update the view model state when the modal is submitted
    */
   private handleModalSubmit() {
-    var elemToBeReplaced = this.props.cellObj.elemToBeReplaced;
-    var labelValue: string = this.props.cellObj.lblValue;
-    var fieldInternalName: string = this.props.cellObj.fieldKeySelected;
+    const elemToBeReplaced = this.props.cellObj.elemToBeReplaced;
+    const labelValue: string = this.props.cellObj.lblValue;
+    const fieldInternalName: string = this.props.cellObj.fieldKeySelected;
 
     if (this.props.cellObj.showLblInput && elemToBeReplaced && labelValue) {
       this.props.cellObj.hasInputType = true;
@@ -193,7 +193,7 @@ export default class FormCell extends React.Component<IFormCellProps> {
    * @param e Object returned by the event receiver
    */
   private handleElemTypeChange(e): void {
-    var keyVal: string = e.key;
+    const keyVal: string = e.key;
     this.props.cellObj.elemTypeKeySelected = keyVal;
 
     if (keyVal === "lbl") {
@@ -211,10 +211,10 @@ export default class FormCell extends React.Component<IFormCellProps> {
    * @param e Object returned by the event receiver
    */
   private handleFieldChange(e): void {
-    var internalName: string = e.key;
+    const internalName: string = e.key;
     this.props.cellObj.fieldKeySelected = internalName;
 
-    var selectedFieldObject: object = this._fields.filter(obj => {
+    const selectedFieldObject: object = this._fields.filter(obj => {
       return obj.InternalName === internalName;
     });
     this.props.cellObj.spoFieldType = selectedFieldObject[0].TypeAsString;
