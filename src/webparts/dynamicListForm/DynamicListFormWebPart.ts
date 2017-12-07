@@ -17,7 +17,6 @@ import {
 import * as strings from "DynamicListFormWebPartStrings";
 import DynamicListForm from "./components/DynamicListForm";
 import { IDynamicListFormProps } from "./components/IDynamicListFormProps";
-import { IDynamicListFormWebPartProps } from "./IDynamicListFormWebPartProps";
 import MockHttpClient from "./MockHttpClient";
 import { IODataList } from "@microsoft/sp-odata-types";
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
@@ -29,6 +28,12 @@ export interface ISPLists {
 export interface ISPList {
   Title: string;
   Id: string;
+}
+
+export interface IDynamicListFormWebPartProps {
+  title: string;
+  listName: string;
+  isEditable: boolean;
 }
 
 export default class DynamicListFormWebPart extends BaseClientSideWebPart<

@@ -1,8 +1,14 @@
 import * as React from "react";
-import { IFormRowProps } from "./IFormRowProps";
 import FormCell from "./FormCell";
 import { IconButton } from "office-ui-fabric-react/lib/Button";
 import styles from "./FormRow.module.scss";
+
+export interface IFormRowProps {
+  isEditable: boolean;
+  rowObj: any;
+  onRemoveRow: any;
+  onCellChange: any;
+}
 
 export default class FormRow extends React.Component<IFormRowProps> {
   constructor(props) {

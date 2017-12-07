@@ -1,6 +1,5 @@
 import * as React from "react";
 import formStyles from "./FormCell.module.scss";
-import { IFormCellProps } from "./IFormCellProps";
 import { escape } from "@microsoft/sp-lodash-subset";
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 import { Modal } from "office-ui-fabric-react/lib/Modal";
@@ -15,6 +14,14 @@ import {
   Callout,
   IDropdownOption
 } from "office-ui-fabric-react/lib";
+
+export interface IFormCellProps {
+  listName: string;
+  context: any;
+  isEditable: boolean;
+  cellObj: any;
+  onChange: any;
+}
 
 export interface ISPField {
   Title: string;
